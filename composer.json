@@ -1,0 +1,19 @@
+{
+    "name": "fernandomercado-dev/web_appsalon-es",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "MVC\\" : "./",
+            "Controllers\\" : "./controllers",
+            "Model\\" : "./models",
+            "Classes\\" : "./classes"
+        }
+    },
+    "authors": [
+        {
+            "name": "FernandoMercado-Dev",
+            "email": "fernandomercado.b@hotmail.com"
+        }
+    ],
+    "require": {}
+}
