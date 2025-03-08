@@ -1,0 +1,19 @@
+{
+  "name": "web_appsalon-es",
+  "version": "1.0.0",
+  "description": "Practicando Desarrollo Web Completo",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FernandoMercado-Dev/web_AppSalon-ES.git"
+  },
+  "author": "FernandoMercado-Dev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FernandoMercado-Dev/web_AppSalon-ES/issues"
+  },
+  "homepage": "https://github.com/FernandoMercado-Dev/web_AppSalon-ES#readme"
+}
