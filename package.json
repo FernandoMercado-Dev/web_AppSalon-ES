@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/FernandoMercado-Dev/web_AppSalon-ES/issues"
   },
-  "homepage": "https://github.com/FernandoMercado-Dev/web_AppSalon-ES#readme"
+  "homepage": "https://github.com/FernandoMercado-Dev/web_AppSalon-ES#readme",
+  "devDependencies": {
+    "sass": "^1.85.1"
+  }
 }
