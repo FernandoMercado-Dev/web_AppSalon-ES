@@ -16,4 +16,18 @@ class ActiveRecord {
     public static function setDB($database) {
         self::$db = $database;
     }
+
+    // ─── Alertas asignar, obtener y validar ───────────────────────────────────────────────
+    public static function setAlerta($tipo, $mensaje) {
+        static::$alertas[$tipo][] = $mensaje;
+    }
+
+    public static function getAlerta() {
+        return static::$alertas; 
+    }
+
+    public static function validar() {
+        static::$alertas = [];
+        return static::$alertas;
+    }
 }
