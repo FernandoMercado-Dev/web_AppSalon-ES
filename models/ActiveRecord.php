@@ -94,4 +94,91 @@ class ActiveRecord {
             }
         }
     }
+
+    // ─── Operaciones CRUD ──────────────────────────────────────────────────
+
+    // Verificación de crar o actualizar
+    public function guardar() {
+        $resultado = '';
+
+        if(!is_null($this->id)) {
+            // Actualizar
+            $resultado = $this->actualizar();
+        } else {
+            // Crear
+            $resultado = $this->crear();
+        }
+
+        return $resultado;
+    }
+
+    // Consultas de lectura (read)
+    // Obtener todos los registros
+    public function all() {
+        $query = " SELECT * FROM " . static::$tabla;
+        $resultado = self::consultarSQL($query);
+        return $resultado;
+    }
+
+    // Buscar un registro por su ID
+    public function find($id) {
+        $query = " SELECT * FROM " . static::$tabla . " WHERE id = {$id}";
+        $resultado = self::consultarSQL($query);
+        return  array_shift($resultado);
+    }
+
+    // Obtener Registros con cierta cantidad
+    public function get($limite) {
+        $query = " SELECT * FROM " . static::$tabla . " LIMIT {$limite}";
+        $resultado = self::consultarSQL($query);
+        return array_shift( $resultado ) ;
+    }
+
+    // Consultas create, update y delete
+
+    public function crear() {
+        // Sanitizar los datos
+        $atributos = $this->sanitizarAtributos();
+
+        // Insertar en la base de datos
+        $query = " INSERT INTO " . static::$tabla . " ( ";
+        $query .= join(', ', array_keys($atributos));
+        $query .= " ) VALUES (' "; 
+        $query .= join("', '", array_values($atributos));
+        $query .= " ') ";
+
+        // Resultado de la consulta
+        $resultado = self::$db->query($query);
+        return [
+        'resultado' =>  $resultado,
+        'id' => self::$db->insert_id
+        ];
+    }
+
+    public function actualizar() {
+        // Sanitizar los datos
+        $atributos = $this->sanitizarAtributos();
+
+        // Iterar para ir agregando cada campo de la BD
+        $valores = [];
+        foreach($atributos as $key => $value) {
+            $valores[] = "{$key}='{$value}'";
+        }
+
+        // Consulta SQL
+        $query = "UPDATE " . static::$tabla ." SET ";
+        $query .=  join(', ', $valores );
+        $query .= " WHERE id = '" . self::$db->escape_string($this->id) . "' ";
+        $query .= " LIMIT 1 "; 
+
+        // Actualizar BD
+        $resultado = self::$db->query($query);
+        return $resultado;
+    }
+
+    public function eliminar() {
+        $query = "DELETE FROM "  . static::$tabla . " WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1";
+        $resultado = self::$db->query($query);
+        return $resultado;
+    }
 }
