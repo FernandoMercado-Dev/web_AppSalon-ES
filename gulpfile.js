@@ -17,3 +17,16 @@ const paths = {
     scss: 'src/scss/**/*.scss',
     js: 'src/js/**/*.js'
 }
+
+// ─── Compilar Sass A Css ─────────────────────────────────────────────────────
+export function compilarSCSS(done) {
+    src(paths.scss, { sourcemaps: true })
+        .pipe(sass({
+            outputStyle: 'compressed'
+        })
+        .on('error', sass.logError))
+        .pipe(dest(
+            './public/build/css', { sourcemaps: '.' }
+        ));
+    done()
+}
