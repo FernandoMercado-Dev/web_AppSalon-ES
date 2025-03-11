@@ -11,6 +11,7 @@ import gulpSass from 'gulp-sass';
 const sass = gulpSass(dartSass);
 import terser from 'gulp-terser';
 import sharp from 'sharp';
+import { disconnect } from 'process';
 
 // ─── Rutas Definidas ─────────────────────────────────────────────────────────
 const paths = {
@@ -28,5 +29,13 @@ export function compilarSCSS(done) {
         .pipe(dest(
             './public/build/css', { sourcemaps: '.' }
         ));
+    done()
+}
+
+// ─── Compilar Todos Los Archivos JS ──────────────────────────────────────────
+export function compilarJS(done) {
+    src(paths.js)
+        .pipe(terser())
+        .pipe(dest('./public/build/js'))
     done()
 }
