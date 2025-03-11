@@ -11,9 +11,6 @@ import gulpSass from 'gulp-sass';
 const sass = gulpSass(dartSass);
 import terser from 'gulp-terser';
 import sharp from 'sharp';
-import { disconnect } from 'process';
-import { imagenes } from '../3-AppSalon_PHP_MVC_JS_SASS/gulpfile';
-import { constants } from 'buffer';
 
 // ─── Rutas Definidas ─────────────────────────────────────────────────────────
 const paths = {
@@ -46,7 +43,7 @@ export function compilarJS(done) {
 export async function rutasImagenes(done) {
     const srcDir = './src/img';
     const buildDir = './public/build/img';
-    const images = await glob('.sr/img/**/*')
+    const images = await glob('./src/img/**/*')
 
     images.forEach(file => {
         const relativePath = path.relative(srcDir, path.dirname(file));
@@ -55,10 +52,12 @@ export async function rutasImagenes(done) {
         // Enviar constantes a la funcion de optimizar imagenes
         procesarImagenes(file, outputSubDir);
     });
+    done()
 }
 
 // ─── Optimización De Imagenes ────────────────────────────────────────────────
 function procesarImagenes(file, outputSubDir) {
+    
     // Creacion del directorio si no existe
     if(!fs.existsSync(outputSubDir)) {
         fs.mkdirSync(outputSubDir, { recursive: true })
@@ -69,25 +68,13 @@ function procesarImagenes(file, outputSubDir) {
 
     // Pasar las imagenes svg directamente al directorio nuevo
     if(extName.toLowerCase() === '.svg') {
-        const outputFile = path.join(
-            outputSubDir, 
-            `${baseName}${extName}`
-        );
+        const outputFile = path.join(outputSubDir, `${baseName}${extName}`);
 
         fs.copyFileSync(file, outputFile);
     } else {
-        const outputFile = path.join(
-            outputSubDir,
-            `${baseName}${extName}`
-        );
-        const outputFileWebp = path.join(
-            outputSubDir,
-            `${baseName}.webp`
-        );
-        const outputFileAvif = path.join(
-            outputSubDir,
-            `${baseName}.avif`
-        );
+        const outputFile = path.join(outputSubDir, `${baseName}${extName}`);
+        const outputFileWebp = path.join(outputSubDir, `${baseName}.webp`);
+        const outputFileAvif = path.join(outputSubDir, `${baseName}.avif`);
         const options = { quality: 80 };
 
         sharp(file).jpeg(options).toFile(outputFile);
