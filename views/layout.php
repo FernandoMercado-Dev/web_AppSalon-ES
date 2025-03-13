@@ -10,8 +10,13 @@
     <title>App Salón</title>
 </head>
 <body>
+    <div class="contenedor-app">
+        <div class="imagen"></div>
+        <div class="app">
+        <?php echo $contenido ?>
+        </div>
+    </div>
     
-    <?php echo $contenido ?>
 
 </body>
 </html>
